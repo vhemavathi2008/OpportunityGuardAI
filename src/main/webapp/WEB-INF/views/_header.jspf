@@ -1,0 +1,39 @@
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><c:out value="${pageTitle}"/> · OpportunityGuard AI</title>
+  <link rel="stylesheet" href="${ctx}/css/style.css">
+  <script src="${ctx}/js/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand"><b>OpportunityGuard AI</b><span>Never miss your next opportunity.</span></div>
+    <nav class="nav" aria-label="Main">
+      <a href="${ctx}/dashboard" class="${active == 'dashboard' ? 'active' : ''}">Dashboard</a>
+      <a href="${ctx}/opportunities" class="${active == 'opportunities' ? 'active' : ''}">Opportunities</a>
+      <a href="${ctx}/notifications" class="${active == 'notifications' ? 'active' : ''}">Notifications
+        <c:if test="${unreadCount > 0}"><span class="count">${unreadCount}</span></c:if></a>
+      <a href="${ctx}/gmail" class="${active == 'gmail' ? 'active' : ''}">Gmail Sync</a>
+      <a href="${ctx}/profile" class="${active == 'profile' ? 'active' : ''}">Profile</a>
+      <a href="${ctx}/settings" class="${active == 'settings' ? 'active' : ''}">Settings</a>
+    </nav>
+  </aside>
+  <div class="main">
+
+    <header class="topbar">
+      <h1><c:out value="${pageTitle}"/></h1>
+      <div class="who">
+        <span><c:out value="${sessionScope.userName}"/></span>
+        <form class="inline" method="post" action="${ctx}/logout">
+          <input type="hidden" name="_csrf" value="${csrfToken}">
+          <button class="btn ghost sm" type="submit">Log out</button>
+        </form>
+      </div>
+    </header>
+    <main class="content">
+      <c:if test="${not empty flashSuccess}"><div class="alert ok" role="status"><c:out value="${flashSuccess}"/></div></c:if>
+      <c:if test="${not empty flashError}"><div class="alert err" role="alert"><c:out value="${flashError}"/></div></c:if>
